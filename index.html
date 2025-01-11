@@ -182,9 +182,20 @@ title: Habit Tracker
         'september', 'october', 'november', 'december'
     ];
 
-    function getDaysInMonth(month, year) {
-        return new Date(year, month + 1, 0).getDate();
-    }
+    const daysPerMonth = {
+        january: 31,
+        february: 28, // Note: 2025 is not a leap year
+        march: 31,
+        april: 30,
+        may: 31,
+        june: 30,
+        july: 31,
+        august: 31,
+        september: 30,
+        october: 31,
+        november: 30,
+        december: 31
+    };
 
     function getDateString(year, month, day) {
         // Format: YYYY-MM-DD
@@ -208,25 +219,8 @@ title: Habit Tracker
             const daysDiv = document.createElement('div');
             daysDiv.className = 'days';
 
-            const daysInMonth = getDaysInMonth(monthIndex, year);
-
-            // Add day of week headers
-            ['S', 'M', 'T', 'W', 'T', 'F', 'S'].forEach(day => {
-                const dayHeader = document.createElement('div');
-                dayHeader.className = 'day-header';
-                dayHeader.textContent = day;
-                daysDiv.appendChild(dayHeader);
-            });
-
-            // Add padding for first day of month
-            const firstDay = new Date(year, monthIndex, 1).getDay();
-            for (let i = 0; i < firstDay; i++) {
-                const paddingDiv = document.createElement('div');
-                paddingDiv.className = 'day empty';
-                daysDiv.appendChild(paddingDiv);
-            }
-
-            for (let i = 1; i <= daysInMonth; i++) {
+            // Add days based on the correct number for each month
+            for (let i = 1; i <= daysPerMonth[monthName]; i++) {
                 const dayDiv = document.createElement('div');
                 dayDiv.className = 'day';
                 
@@ -242,7 +236,6 @@ title: Habit Tracker
                     dayDiv.classList.add('gym');
                 }
 
-                dayDiv.textContent = i;
                 daysDiv.appendChild(dayDiv);
             }
 
