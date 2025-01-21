@@ -1,138 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2024 Habit Tracker</title>
     <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-        background-color: #1a1a1a;
-        color: #c0c0c0;
-        font-family: system-ui, -apple-system, sans-serif;
-        min-height: 100vh;
-    }
+        body {
+            background-color: #1a1a1a;
+            color: #c0c0c0;
+            font-family: system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+        }
 
-    .container {
-        width: 100%;
-        max-width: 1800px;
-        margin: 0 auto;
-        padding: 1.5rem;
-    }
+        .container {
+            width: 100%;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
 
-    .year {
-        font-size: clamp(2rem, 5vw, 3rem);
-        margin-bottom: 2rem;
-        text-align: left;
-        padding-left: 1.5rem;
-    }
+        .year {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 2rem;
+            text-align: left;
+            padding-left: 1.5rem;
+        }
 
-    .main-content {
-        display: flex;
-        gap: 3rem;
-        padding: 0 1rem;
-        position: relative;
-    }
+        .main-content {
+            display: flex;
+            gap: 3rem;
+            padding: 0 1rem;
+            position: relative;
+        }
 
-    .categories {
-        min-width: 250px;
-        flex-shrink: 0;
-        background-color: #242424;
-        border-radius: 12px;
-        padding: 1rem;
-        height: fit-content;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+        .categories {
+            min-width: 250px;
+            flex-shrink: 0;
+            background-color: #242424;
+            border-radius: 12px;
+            padding: 1rem;
+            height: fit-content;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    .category {
-        display: flex;
-        align-items: left;
-        gap: 1rem;
-        margin-bottom: 0.5rem;
-        cursor: pointer;
-        font-size: clamp(1rem, 2.5vw, 1.25rem);
-        padding: 0.75rem 1rem;
-        border-radius: 8px;
-        transition: all 0.2s ease;
-    }
+        .category {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
 
-    .dot {
-        width: clamp(18px, 4.5vw, 24px);
-        height: clamp(18px, 4.5vw, 24px);
-        border-radius: 50%;
-        display: inline-block;
-        flex-shrink: 0;
-    }
+        .category:hover {
+            background-color: #333;
+        }
 
-    .calendar-wrapper {
-        flex-grow: 1;
-        background-color: #242424;
-        border-radius: 12px;
-        padding: 2rem;
-    }
+        .category.active {
+            background-color: #404040;
+        }
 
-    .calendar {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 2rem;
-    }
+        .dot {
+            width: clamp(18px, 4.5vw, 24px);
+            height: clamp(18px, 4.5vw, 24px);
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
 
-    .month {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
+        .calendar-wrapper {
+            flex-grow: 1;
+            background-color: #242424;
+            border-radius: 12px;
+            padding: 2rem;
+        }
 
-    .month-name {
-        color: #888;
-        font-size: 1.2rem;
-        text-transform: capitalize;
-        font-weight: 500;
-    }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
 
-    .days {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 8px;
-        justify-items: center;
-    }
+        .month {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
 
-    .day {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background-color: #333;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
+        .month-name {
+            color: #888;
+            font-size: 1.2rem;
+            text-transform: capitalize;
+            font-weight: 500;
+        }
 
-    .day:hover {
-        transform: scale(1.1);
-    }
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            justify-items: center;
+        }
 
-    .day.meals {
-        background-color: #0799ee;
-    }
+        .day {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #333;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .day.gym {
-        background-color: #dff800;
-    }
+        .day:hover {
+            transform: scale(1.1);
+        }
 
-    .day.both {
-        background-color: #114706;
-    }
+        .day.meals {
+            background-color: #0799ee;
+        }
+
+        .day.gym {
+            background-color: #dff800;
+        }
+
+        .day.split {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        .day.split::before,
+        .day.split::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 50%;
+        }
+
+        .day.split::before {
+            top: 0;
+            background-color: #0799ee;
+        }
+
+        .day.split::after {
+            bottom: 0;
+            background-color: #dff800;
+        }
+
+        .day.hidden {
+            opacity: 0.2;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="year">2025</div>
         <div class="main-content">
             <div class="categories">
+
                 <div class="category" data-category="meals">
                     <span class="dot" style="background-color: #0799ee;"></span>
                     <span>Meals</span>
@@ -141,9 +179,8 @@
                     <span class="dot" style="background-color: #dff800;"></span>
                     <span>Gym</span>
                 </div>
-                <div class="category" data-category="both">
-                    <span class="dot" style="background-color: #114706;"></span>
-                    <span>Both</span>
+                <div class="category" data-category="all">
+                    <span>Show All</span>
                 </div>
             </div>
             <div class="calendar-wrapper">
@@ -153,152 +190,190 @@
     </div>
 
     <script>
-    // Get posts data from Jekyll
-    const posts = {
-        meals: [
-            
+        // Sample data - replace with your actual data
+        const posts = {
+            meals: [
                 
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-                    "2025-01-04",
-                
-            
-                
-            
-                
-            
-                
-                    "2025-01-01",
-                
-            
-                
-            
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        "2025-01-04", 
+        
+        
+        
+        
+        
+        
+        
+        "2025-01-01", 
+        
+        
+        
+        
         ],
         gym: [
             
-                
-                    "2025-01-11",
-                
-            
-                
-                    "2025-01-10",
-                
-            
-                
-                    "2025-01-09",
-                
-            
-                
-                    "2025-01-08",
-                
-            
-                
-                    "2025-01-07",
-                
-            
-                
-                    "2025-01-06",
-                
-            
-                
-            
-                
-                    "2025-01-03",
-                
-            
-                
-                    "2025-01-02",
-                
-            
-                
-            
-                
-                    "2025-01-01"
-                
-            
+        
+        "2025-01-11", 
+        
+        
+        
+        "2025-01-10", 
+        
+        
+        
+        "2025-01-09", 
+        
+        
+        
+        "2025-01-08", 
+        
+        
+        
+        "2025-01-07", 
+        
+        
+        
+        "2025-01-06", 
+        
+        
+        
+        
+        
+        "2025-01-03", 
+        
+        
+        
+        "2025-01-02", 
+        
+        
+        
+        
+        
+        "2025-01-01"
+        
+        
         ]
     };
 
-    const months = [
-        'january', 'february', 'march', 'april',
-        'may', 'june', 'july', 'august',
-        'september', 'october', 'november', 'december'
-    ];
+        const months = [
+            'january', 'february', 'march', 'april',
+            'may', 'june', 'july', 'august',
+            'september', 'october', 'november', 'december'
+        ];
 
-    const daysPerMonth = {
-        january: 31,
-        february: 28, // Note: 2025 is not a leap year
-        march: 31,
-        april: 30,
-        may: 31,
-        june: 30,
-        july: 31,
-        august: 31,
-        september: 30,
-        october: 31,
-        november: 30,
-        december: 31
-    };
+        const daysPerMonth = {
+            january: 31,
+            february: 28,
+            march: 31,
+            april: 30,
+            may: 31,
+            june: 30,
+            july: 31,
+            august: 31,
+            september: 30,
+            october: 31,
+            november: 30,
+            december: 31
+        };
 
-    function getDateString(year, month, day) {
-        // Format: YYYY-MM-DD
-        const monthStr = String(month + 1).padStart(2, '0');
-        const dayStr = String(day).padStart(2, '0');
-        return `${year}-${monthStr}-${dayStr}`;
-    }
+        function getDateString(year, month, day) {
+            const monthStr = String(month + 1).padStart(2, '0');
+            const dayStr = String(day).padStart(2, '0');
+            return `${year}-${monthStr}-${dayStr}`; // Corrected: wrapped in backticks
+        }
 
-    function createCalendar() {
-        const calendar = document.querySelector('.calendar');
-        const year = 2025;
 
-        months.forEach((monthName, monthIndex) => {
-            const monthDiv = document.createElement('div');
-            monthDiv.className = 'month';
+        function createCalendar() {
+            const calendar = document.querySelector('.calendar');
+            const year = 2025;
 
-            const monthNameDiv = document.createElement('div');
-            monthNameDiv.className = 'month-name';
-            monthNameDiv.textContent = monthName;
+            months.forEach((monthName, monthIndex) => {
+                const monthDiv = document.createElement('div');
+                monthDiv.className = 'month';
 
-            const daysDiv = document.createElement('div');
-            daysDiv.className = 'days';
+                const monthNameDiv = document.createElement('div');
+                monthNameDiv.className = 'month-name';
+                monthNameDiv.textContent = monthName;
 
-            // Add days based on the correct number for each month
-            for (let i = 1; i <= daysPerMonth[monthName]; i++) {
-                const dayDiv = document.createElement('div');
-                dayDiv.className = 'day';
-                
-                const dateStr = getDateString(year, monthIndex, i);
-                const hasMeal = posts.meals.includes(dateStr);
-                const hasGym = posts.gym.includes(dateStr);
+                const daysDiv = document.createElement('div');
+                daysDiv.className = 'days';
 
-                if (hasMeal && hasGym) {
-                    dayDiv.classList.add('both');
-                } else if (hasMeal) {
-                    dayDiv.classList.add('meals');
-                } else if (hasGym) {
-                    dayDiv.classList.add('gym');
+                for (let i = 1; i <= daysPerMonth[monthName]; i++) {
+                    const dayDiv = document.createElement('div');
+                    dayDiv.className = 'day';
+
+                    const dateStr = getDateString(year, monthIndex, i);
+                    const hasMeal = posts.meals.includes(dateStr);
+                    const hasGym = posts.gym.includes(dateStr);
+
+                    if (hasMeal && hasGym) {
+                        dayDiv.classList.add('split');
+                    } else if (hasMeal) {
+                        dayDiv.classList.add('meals');
+                    } else if (hasGym) {
+                        dayDiv.classList.add('gym');
+                    }
+
+                    dayDiv.setAttribute('data-meal', hasMeal);
+                    dayDiv.setAttribute('data-gym', hasGym);
+
+                    daysDiv.appendChild(dayDiv);
                 }
 
-                daysDiv.appendChild(dayDiv);
-            }
+                monthDiv.appendChild(monthNameDiv);
+                monthDiv.appendChild(daysDiv);
+                calendar.appendChild(monthDiv);
+            });
+        }
 
-            monthDiv.appendChild(monthNameDiv);
-            monthDiv.appendChild(daysDiv);
-            calendar.appendChild(monthDiv);
+        function initializeFilters() {
+            const categories = document.querySelectorAll('.category');
+            categories.forEach(category => {
+                category.addEventListener('click', () => {
+                    // Remove active class from all categories
+                    categories.forEach(c => c.classList.remove('active'));
+                    // Add active class to clicked category
+                    category.classList.add('active');
+
+                    const selectedCategory = category.dataset.category;
+                    const days = document.querySelectorAll('.day');
+
+                    days.forEach(day => {
+                        day.classList.remove('hidden');
+                        const hasMeal = day.getAttribute('data-meal') === 'true';
+                        const hasGym = day.getAttribute('data-gym') === 'true';
+
+                        if (selectedCategory === 'all') {
+                            return;
+                        } else if (selectedCategory === 'meals' && !hasMeal) {
+                            day.classList.add('hidden');
+                        } else if (selectedCategory === 'gym' && !hasGym) {
+                            day.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            // Set "Show All" as initially active
+            document.querySelector('[data-category="all"]').classList.add('active');
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            createCalendar();
+            initializeFilters();
         });
-    }
-
-    document.addEventListener("DOMContentLoaded", createCalendar);
     </script>
 </body>
+
 </html>
